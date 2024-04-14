@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "BookReviewApp",
+    "scheme": "BookReviewApp",
     "slug": "BookReviewApp",
     "version": "1.0.0",
     "orientation": "portrait",
