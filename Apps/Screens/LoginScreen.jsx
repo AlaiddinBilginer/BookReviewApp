@@ -19,7 +19,7 @@ const LoginScreen = () => {
           if (createdSessionId) {
             setActive({ session: createdSessionId });
           } else {
-            // Use signIn or signUp for next steps such as MFA
+            
           }
         } catch (err) {
           console.error("OAuth error", err);
@@ -27,14 +27,14 @@ const LoginScreen = () => {
       }, []);
 
     return (
-        <View>
+        <View className="my-auto">
             <Image  source={require('../../assets/images/login.png')}
-                className="w-full h-[250px] object-cover mt-16"
+                className="w-full h-[280px] object-cover mt-16"
             />
             <View className="p-7 bg-white mt-[15px]">
-                <Text className="text-[40px] font-bold">Kitap Rehberi</Text>
-                <Text className="text-[16px] text-slate-500 mt-7">Binlerce kitap incelemesi arasında gezinerek yeni okuma maceralarına adım atın.</Text>
-                <TouchableOpacity onPress={onPress} className="p-3 bg-blue-500 rounded-full mt-20">
+                <Text className="text-[40px] font-bold text-center">Kitap Rehberi</Text>
+                <Text className="text-[16px] text-slate-500 mt-5 text-center">Binlerce kitap incelemesi arasında gezinerek yeni okuma maceralarına adım atın.</Text>
+                <TouchableOpacity onPress={onPress} className="p-3 bg-blue-400 rounded-full mt-10">
                     <Text className="text-white text-center text-[18px]">Başla</Text>
                 </TouchableOpacity>
             </View>
