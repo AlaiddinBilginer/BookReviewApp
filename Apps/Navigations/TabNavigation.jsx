@@ -8,6 +8,7 @@ import WritersScreen from '../Screens/WritersScreen';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import HomeScreenStackNav from './HomeScreenStackNav';
 
 
 const Tab = createBottomTabNavigator();
@@ -18,7 +19,7 @@ export default function TabNavigation() {
       headerShown: false,
       tabBarActiveTintColor: '#41B06E',
     }}>
-        <Tab.Screen name='home'  component={HomeScreen} options={{
+        <Tab.Screen name='home-nav'  component={HomeScreenStackNav} options={{
           tabBarLabel: ({color}) => (
             <Text style={{color:color, fontSize:12, marginBottom:4}}>Ana Sayfa</Text>
           ),
