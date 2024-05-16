@@ -3,12 +3,15 @@ import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import { app } from '../../firebaseConfig';
+import { useNavigation } from '@react-navigation/native';
 
 export default function WritersScreen() {
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const db = getFirestore(app);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     fetchAuthors();
@@ -30,9 +33,7 @@ export default function WritersScreen() {
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-    const filtered = items.filter((item) =>
-      item.name?.toLowerCase().includes(query.toLowerCase())
-    );
+    const filtered = items.filter((item) => item.name?.toLowerCase().includes(query.toLowerCase()));
     if (filtered.length % 2 !== 0) {
       filtered.push({ isPlaceholder: true });
     }
@@ -40,31 +41,29 @@ export default function WritersScreen() {
   };
 
   return (
-    <View className='flex-1 p-4 mt-10'>
-      <TextInput
-        className='border border-gray-300 rounded p-2 mb-4'
-        placeholder="Yazar Ara"
-        value={searchQuery}
-        onChangeText={handleSearch}
-      />
+    <View className="flex-1 p-4 mt-10">
+      <TextInput className="border border-gray-300 rounded p-2 mb-4" placeholder="Yazar Ara" value={searchQuery} onChangeText={handleSearch} />
       <FlatList
         data={filteredItems}
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => {
           if (item.isPlaceholder) {
-            return <View className='flex-1 m-2' />;
+            return <View className="flex-1 m-2" />;
           }
 
           return (
             <TouchableOpacity
-              className= 'flex-1 m-2 p-3 bg-white border border-gray-300 rounded shadow-lg'
+              className="flex-1 m-2 p-3 bg-white border border-gray-300 rounded shadow-lg"
+              onPress={() =>
+                navigation.push('writer-detail', {
+                  writer: item,
+                  name: item.name,
+                })
+              }
             >
-              <Image
-                source={{ uri: item.image }}
-                className='w-full h-40 rounded'
-              />
-              <Text className='text-lg font-bold mt-3 text-[15px] text-center'>{item.name}</Text>
+              <Image source={{ uri: item.image }} className="w-full h-40 rounded" />
+              <Text className="text-lg font-bold mt-3 text-[15px] text-center">{item.name}</Text>
             </TouchableOpacity>
           );
         }}

@@ -1,31 +1,19 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '../Screens/HomeScreen';
-import ItemList from '../Screens/ItemList';
+import BooksScreen from '../Screens/BooksScreen';
 import BookDetail from '../Screens/BookDetail';
 
 const Stack = createStackNavigator();
 
-export default function HomeScreenStackNav() {
+const BookListScreenStackNav = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="home"
-        component={HomeScreen}
+        name="books"
+        component={BooksScreen}
         options={{
           headerShown: false,
         }}
-      />
-      <Stack.Screen
-        name="item-list"
-        component={ItemList}
-        options={({ route }) => ({
-          title: route.params.category,
-          headerStyle: {
-            backgroundColor: '#75A47F',
-          },
-          headerTintColor: '#fff',
-        })}
       />
       <Stack.Screen
         name="book-detail"
@@ -40,4 +28,6 @@ export default function HomeScreenStackNav() {
       />
     </Stack.Navigator>
   );
-}
+};
+
+export default BookListScreenStackNav;

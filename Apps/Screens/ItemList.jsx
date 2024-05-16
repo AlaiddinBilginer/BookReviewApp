@@ -64,6 +64,7 @@ export default function ItemList() {
               onPress={() =>
                 navigation.push('book-detail', {
                   book: item,
+                  title: item.title,
                 })
               }
             >

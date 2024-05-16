@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import { app } from '../../firebaseConfig';
+import { useNavigation } from '@react-navigation/native';
 
 export default function BooksScreen() {
   const [items, setItems] = useState([]);
@@ -10,11 +11,13 @@ export default function BooksScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const db = getFirestore(app);
 
+  const navigation = useNavigation();
+
   useEffect(() => {
-    fetchAuthors();
+    fetchBooks();
   }, []);
 
-  const fetchAuthors = async () => {
+  const fetchBooks = async () => {
     const books = [];
     const snapshot = await getDocs(collection(db, 'Books'));
     snapshot.forEach((doc) => {
@@ -50,7 +53,15 @@ export default function BooksScreen() {
           }
 
           return (
-            <TouchableOpacity className="flex-1 m-2 p-3 bg-white border border-gray-300 rounded shadow-lg">
+            <TouchableOpacity
+              className="flex-1 m-2 p-3 bg-white border border-gray-300 rounded shadow-lg"
+              onPress={() =>
+                navigation.push('book-detail', {
+                  book: item,
+                  title: item.title,
+                })
+              }
+            >
               <Image source={{ uri: item.image }} className="w-full h-60 rounded" />
               <Text className="text-lg font-bold mt-3 text-[15px] text-center">{item.title}</Text>
             </TouchableOpacity>
