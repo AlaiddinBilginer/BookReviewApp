@@ -9,7 +9,7 @@ const WriterListScreenStackNav = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="writers"
+        name="writersList"
         component={WritersScreen}
         options={{
           headerShown: false,

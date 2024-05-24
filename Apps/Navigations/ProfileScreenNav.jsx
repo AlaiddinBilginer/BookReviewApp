@@ -1,33 +1,32 @@
+import { View, Text } from 'react-native';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import BooksScreen from '../Screens/BooksScreen';
-import BookDetail from '../Screens/BookDetail';
+import ProfileScreen from '../Screens/ProfileScreen';
+import FavoriteBooks from '../Screens/FavoriteBooks';
 
 const Stack = createStackNavigator();
 
-const BookListScreenStackNav = () => {
+export default function ProfileScreenNav() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="booksList"
-        component={BooksScreen}
+        name="profile-tab"
         options={{
           headerShown: false,
         }}
+        component={ProfileScreen}
       />
       <Stack.Screen
-        name="book-detail"
-        component={BookDetail}
-        options={({ route }) => ({
-          title: route.params.title,
+        name="favorite-books"
+        options={{
           headerStyle: {
             backgroundColor: '#75A47F',
           },
           headerTintColor: '#fff',
-        })}
+          headerTitle: 'Favori Kitaplarım',
+        }}
+        component={FavoriteBooks}
       />
     </Stack.Navigator>
   );
-};
-
-export default BookListScreenStackNav;
+}
