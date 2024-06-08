@@ -14,10 +14,6 @@ export default function Header() {
           <Text className="text-[20px] font-bold">{user?.fullName}</Text>
         </View>
       </View>
-      <View className="p-3 px-5 flex flex-row items-center bg-white mt-5 rounded-full  border-[1px] border-green-600 ">
-        <AntDesign name="search1" size={24} color="black" />
-        <TextInput placeholder="Ara" className="ml-2 text-[18px]" onChangeText={(e) => console.log(e)} />
-      </View>
     </View>
   );
 }

@@ -18,6 +18,9 @@ const FavoriteBooks = () => {
         const q = query(collection(db, 'UserFavoriteBooks'), where('userId', '==', userId));
         const querySnapshot = await getDocs(q);
         const books = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        if (books.length % 2 !== 0) {
+          books.push({ isPlaceholder: true });
+        }
         setFavoriteBooks(books);
       } catch (error) {
         console.error('Error fetching favorite books: ', error.message);
@@ -49,7 +52,7 @@ const FavoriteBooks = () => {
               }
             >
               <Image source={{ uri: item.image }} className="w-full h-60 rounded" />
-              <Text className="text-lg font-bold mt-3 text-[15px] text-center">{item.title}</Text>
+              <Text className="text-lg font-bold mt-3 text-sm text-center">{item.title}</Text>
             </TouchableOpacity>
           );
         }}

@@ -38,7 +38,9 @@ export default function ItemList() {
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-    const filtered = items.filter((item) => item.title?.toLowerCase().includes(query.toLowerCase()));
+    const filtered = items.filter((item) =>
+      item.title?.toLowerCase().includes(query.toLowerCase())
+    );
 
     if (filtered.length % 2 !== 0) {
       filtered.push({ isPlaceholder: true });
@@ -49,7 +51,12 @@ export default function ItemList() {
 
   return (
     <View className="flex-1">
-      <TextInput className="border border-gray-300 rounded p-2 m-5" placeholder="Kitap Ara" value={searchQuery} onChangeText={(text) => handleSearch(text)} />
+      <TextInput
+        className="border border-gray-300 rounded p-2 m-5"
+        placeholder="Kitap Ara"
+        value={searchQuery}
+        onChangeText={(text) => handleSearch(text)}
+      />
       <FlatList
         data={filteredItems}
         numColumns={2}
