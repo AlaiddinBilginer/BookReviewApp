@@ -1,6 +1,14 @@
-import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity, Button } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from 'firebase/firestore';
 import { useUser } from '@clerk/clerk-expo';
 import { app } from '../../firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
@@ -30,6 +38,20 @@ const FavoriteBooks = () => {
     fetchFavoriteBooks();
   }, [user]);
 
+  const removeFromFavorites = async (bookId) => {
+    try {
+      await deleteDoc(doc(db, 'UserFavoriteBooks', bookId));
+      setFavoriteBooks(favoriteBooks.filter((book) => book.id !== bookId));
+      if (favoriteBooks.length % 2 !== 0) {
+        favoriteBooks.push({ isPlaceholder: true });
+      }
+      alert('Kitap favorilerden kaldırıldı');
+    } catch (error) {
+      console.error('Error removing from favorites: ', error.message);
+      alert('Favorilerden kaldırırken bir hata oluştu.');
+    }
+  };
+
   return (
     <View className="flex-1 p-4 mt-10">
       <FlatList
@@ -42,18 +64,20 @@ const FavoriteBooks = () => {
           }
 
           return (
-            <TouchableOpacity
-              className="flex-1 m-2 p-3 bg-white border border-gray-300 rounded shadow-lg"
-              onPress={() =>
-                navigation.push('book-detail', {
-                  book: item,
-                  title: item.title,
-                })
-              }
-            >
-              <Image source={{ uri: item.image }} className="w-full h-60 rounded" />
-              <Text className="text-lg font-bold mt-3 text-sm text-center">{item.title}</Text>
-            </TouchableOpacity>
+            <View className="flex-1 m-2 p-3 bg-white border border-gray-300 rounded shadow-lg">
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.push('book-detail', {
+                    book: item,
+                    title: item.title,
+                  })
+                }
+              >
+                <Image source={{ uri: item.image }} className="w-full h-60 rounded" />
+                <Text className="text-lg font-bold mt-3 text-sm text-center">{item.title}</Text>
+              </TouchableOpacity>
+              <Button title="Favorilerden Kaldır" onPress={() => removeFromFavorites(item.id)} />
+            </View>
           );
         }}
       />
